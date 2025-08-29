@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  postgres:
+    image: 'postgres:13-alpine'
+    container_name:
+    environment:
+      - 'POSTGRES_DB=playground'
+      - 'POSTGRES_PASSWORD=playground'
+      - 'POSTGRES_USER=playground'
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
