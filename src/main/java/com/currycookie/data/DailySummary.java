@@ -9,5 +9,5 @@ public class DailySummary {
     private LocalDate date;
     private double minTemp;
     private double maxTemp;
-    private String mostCommonCondition;
+    private String desription;
 }

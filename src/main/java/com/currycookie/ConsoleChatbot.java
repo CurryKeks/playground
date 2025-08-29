@@ -1,5 +1,7 @@
 package com.currycookie;
 
+import com.currycookie.data.DailySummary;
+import com.currycookie.data.WeatherData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -25,7 +27,8 @@ public class ConsoleChatbot {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("Chatbot is ready. Type 'exit' to quit.");
             while (running.get()) {
-                System.out.println(">");
+                System.out.println("Enter valid city name:");
+                System.out.print("> ");
                 String input = br.readLine();
                 if (input == null) break;
                 input = input.trim();
@@ -33,9 +36,15 @@ public class ConsoleChatbot {
                     running.set(false);
                     System.out.println("Exiting chatbot.");
                 } else if (!input.isEmpty()) {
-                    System.out.println("You said: " + input + ", the forecast is: " + weatherService.getDailySummary(input, 0));
-                    System.out.println("You said: " + input + ", the forecast is: " + weatherService.getForecast(input));
-                    System.out.println("You said: " + input + ", the weather is: " + weatherService.getCurrentWeather(input));
+                    WeatherData current = weatherService.getCurrentWeather(input);
+                    System.out.println("Current weather for " + input + ":");
+                    System.out.println("  Description: " + current.getDescription());
+                    System.out.println("  Temperature: " + current.getTemperature() + "°C");
+
+                    DailySummary forecast = weatherService.getDailySummary(input, 1);
+                    System.out.println("Forecast for tomorrow:");
+                    System.out.println("  Description: " + forecast.getDesription());
+                    System.out.println("  Min: " + forecast.getMinTemp() + "°C, Max: " + forecast.getMaxTemp() + "°C");
                 }
             }
         } catch (IOException e) {

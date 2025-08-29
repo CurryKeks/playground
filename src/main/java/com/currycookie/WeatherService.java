@@ -129,7 +129,7 @@ public class WeatherService {
         summary.setDate(targetDate);
         summary.setMinTemp(min);
         summary.setMaxTemp(max);
-        summary.setMostCommonCondition(condition);
+        summary.setDesription(condition);
 
         return summary;
     }
